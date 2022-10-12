@@ -30,7 +30,7 @@ pipeline:
                     build:
                       type: branch
                       spec:
-                        branch: master
+                        branch: dev
           infrastructure:
             type: KubernetesDirect
             spec:
