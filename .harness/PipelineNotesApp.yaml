@@ -1,0 +1,41 @@
+pipeline:
+  name: PipelineNotesApp
+  identifier: PipelineNotesApp
+  projectIdentifier: SampleProject
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: GithubConnectorMN
+        repoName: Notes
+        build: <+input>
+  stages:
+    - stage:
+        name: Build
+        identifier: Build
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: GitClone
+                  name: CloneRepo
+                  identifier: CloneRepo
+                  spec:
+                    connectorRef: GithubConnectorMN
+                    repoName: Notes
+                    build:
+                      type: branch
+                      spec:
+                        branch: master
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: harnessnadeem
+              namespace: harness-delegate-ng
+              automountServiceAccountToken: true
+              nodeSelector: {}
+              os: Windows
